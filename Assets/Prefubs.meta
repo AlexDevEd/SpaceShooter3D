@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefubs.meta
 guid: 93e3ee3d235ec4340afb5052c569cf4c
+=======
+guid: 7bf7c9a7af27f5e4684ed7d01db6588c
+>>>>>>> ff5463b49f9998f9ba1abb52200c4d977e31b460:Assets/epyphany.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
