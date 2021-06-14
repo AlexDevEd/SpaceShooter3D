@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -9,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     [Tooltip("ì/ñ")] [SerializeField] private float speed = 10f;
     [SerializeField] private float xClamp = 10.5f;
     [SerializeField] private float yClamp = 7f;
+    [SerializeField] private GameObject[] guns;
 
     [Header("Rotation")]
     [SerializeField] private float xRotFactor = -5f;
@@ -20,9 +22,11 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float yMoveRot = -10f;
     [SerializeField] private float zMoveRot = -10f;
 
+    ParticleSystem.EmissionModule EmissionModule; 
     private float xMove;
     private float yMove;
     private bool isControlEnabled = true;
+    private bool isParticleEnabled = true;
 
     void Update()
     {
@@ -30,6 +34,7 @@ public class PlayerControl : MonoBehaviour
         {
             MoveShip();
             RotateShip();
+            FireGuns();
         }
     }
 
@@ -61,5 +66,37 @@ public class PlayerControl : MonoBehaviour
         float zRot = xMove * zMoveRot;
 
         transform.localRotation = Quaternion.Euler(xRot, yRot, zRot);
+    }
+
+    private void FireGuns()
+    {
+        if (CrossPlatformInputManager.GetButton("Fire"))
+        {
+            ActivateGuns();
+        }
+        else
+        {
+            DeactivateGuns();
+        }
+    }
+
+    private void ActivateGuns()
+    {
+        foreach (var gun in guns)
+        {
+            EmissionModule = gun.GetComponent<ParticleSystem>().emission;
+            isParticleEnabled = EmissionModule.enabled = true;
+            print("activate" + guns.Length);
+        }
+    }
+    private void DeactivateGuns()
+    {
+        foreach (var gun in guns)
+        {
+            EmissionModule  = gun.GetComponent<ParticleSystem>().emission;
+            isParticleEnabled =  EmissionModule.enabled = false;
+           
+            print("deeeeeee" + guns.Length);
+        }
     }
 }
